@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<container xmlns="http://symfony.com/schema/dic/services"
+           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xsi:schemaLocation="http://symfony.com/schema/dic/services
+        https://symfony.com/schema/dic/services/services-1.0.xsd">
+
+    <services>
+        <service id="johnkhansrc_iaphub.iaphub_http_client_validation_service" class="Johnkhansrc\IaphubBundle\Service\IaphubHttpClientValidationService" />
+        <service id="symfony.http_client" class="Symfony\Component\HttpClient\NativeHttpClient" />
+
+        <service id="johnkhansrc_iaphub.iaphub_http_client_service" class="Johnkhansrc\IaphubBundle\Service\IaphubHttpClientService" public="true" >
+            <argument key="$iaphubHttpClientValidationService" type="service" id="johnkhansrc_iaphub.iaphub_http_client_validation_service"/>
+            <argument key="$client" type="service" id="symfony.http_client"/>
+        </service>
+
+        <service id="johnkhansrc_iaphub.iaphub" class="Johnkhansrc\IaphubBundle\Iaphub" public="true" >
+            <argument key="$iaphubHttpClient" type="service" id="johnkhansrc_iaphub.iaphub_http_client_service"/>
+        </service>
+        
+        <service id="Johnkhansrc\IaphubBundle\Iaphub" alias="johnkhansrc_iaphub.iaphub" public="false" />
+    </services>
+</container>
