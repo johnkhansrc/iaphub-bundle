@@ -5,8 +5,19 @@
         https://symfony.com/schema/dic/services/services-1.0.xsd">
 
     <services>
+<!--        <defaults autowire="true" autoconfigure="true"/>-->
+<!--        <prototype namespace="Johnkhansrc\" resource="../../../src/*" exclude="../../../src/{DependencyInjection,Entity,Tests,Kernel.php}"/>-->
+
         <service id="johnkhansrc_iaphub.iaphub_http_client_validation_service" class="Johnkhansrc\IaphubBundle\Service\IaphubHttpClientValidationService" />
+        <service id="johnkhansrc_iaphub.iaphub_webhook_request_validator_service" class="Johnkhansrc\IaphubBundle\Service\IaphubWebhookRequestValidatorService" public="true" />
+        <service id="johnkhansrc_iaphub.webhook_factory" class="Johnkhansrc\IaphubBundle\Factory\WebhookFactory" />
         <service id="symfony.http_client" class="Symfony\Component\HttpClient\NativeHttpClient" />
+
+        <service id="johnkhansrc_iaphub.iaphub_webhook_entrypoint_controller" class="Johnkhansrc\IaphubBundle\Controller\IaphubWebhookEntrypointController" public="true">
+            <argument key="$webhookFactory" type="service" id="johnkhansrc_iaphub.webhook_factory" />
+            <argument key="$eventDispatcher" type="service" id="event_dispatcher" on-invalid="null" />
+            <argument key="$requestValidator" type="service" id="johnkhansrc_iaphub.iaphub_webhook_request_validator_service" />
+        </service>
 
         <service id="johnkhansrc_iaphub.iaphub_http_client_service" class="Johnkhansrc\IaphubBundle\Service\IaphubHttpClientService" public="true" >
             <argument key="$iaphubHttpClientValidationService" type="service" id="johnkhansrc_iaphub.iaphub_http_client_validation_service"/>

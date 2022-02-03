@@ -1,0 +1,42 @@
+{
+  "productsForSale": [
+    {
+      "id": "5cc317e366ce2d1f18fcb7d5",
+      "type": "consumable",
+      "sku": "pack30_tier20"
+    },
+    {
+      "id": "5cc3186a807ee31f30d7598b",
+      "type": "consumable",
+      "sku": "pack60_tier30"
+    },
+    {
+      "id": "5c967b2a550898361bffbebe",
+      "type": "renewable_subscription",
+      "sku": "subscription1_tier5",
+      "subscriptionPeriodType": "normal",
+      "group": "1cc3186a807ee31f30d75982",
+      "groupName": "premium"
+    }
+  ],
+  "activeProducts": [
+    {
+      "id": "5c967b2a550898361bffber3",
+      "type": "renewable_subscription",
+      "sku": "subscription2_tier10",
+      "purchase": "c967b2a550898361bffber1",
+      "purchaseDate": "2020-05-21T18:59:18.548Z",
+      "expirationDate": "2021-06-20T18:59:31.763Z",
+      "isSubscriptionRenewable": true,
+      "isSubscriptionRetryPeriod": false,
+      "subscriptionPeriodType": "intro",
+      "groupName": "premium"
+    },
+    {
+      "id": "5c967b2a550898361bffber3",
+      "type": "non_consumable",
+      "sku": "vipmode_tier50",
+      "purchaseDate": "2019-04-16T11:24:17.716Z"
+    }
+  ]
+}

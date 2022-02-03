@@ -1,0 +1,11 @@
+{
+  "id":"5e7fdfe22a3cff5084466e74",
+  "type": "user_id_update",
+  "version": "1.2.0",
+  "createdDate":"2030-10-12T17:34:35.256Z",
+  "oldUserIds": ["62785074-8f32-42a5-b86b-90dbd79ce212"],
+  "newUserIds": [
+    "62785074-8f32-42a5-b86b-90dbd79ce212",
+    "42785074-8f32-42a5-b86b-90dbd79ce215"
+  ]
+}

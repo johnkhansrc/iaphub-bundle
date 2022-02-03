@@ -27,11 +27,9 @@ class IaphubExtension extends Extension
         $iaphubHttpClientServiceDefinition = $container->getDefinition('johnkhansrc_iaphub.iaphub_http_client_service');
         $iaphubHttpClientServiceDefinition->setArgument(0, $configs['apikey']);
 
-        // Inject unicorns_are_real and min_sunshine.
-        $definition = $container->getDefinition('johnkhansrc_iaphub.iaphub');
-        $definition->setArgument(1, $configs['unicorns_are_real']);
-        $definition->setArgument(2, $configs['min_sunshine']);
-//        var_dump($definition);die;
+        // Inject webhook_auth_token inside IaphubWebhookRequestValidatorService.
+        $iaphubWebhookRequestValidatorService = $container->getDefinition('johnkhansrc_iaphub.iaphub_webhook_request_validator_service');
+        $iaphubWebhookRequestValidatorService->setArgument(0, $configs['webhook_auth_token']);
     }
 
     /**

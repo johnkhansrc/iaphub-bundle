@@ -1,0 +1,35 @@
+{
+    "name": "johnkhansrc/iaphub-bundle",
+    "description": "An Iaphub integration for symfony application for receive webhooks and manage Iaphub API",
+    "type": "symfony-bundle",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "joHNkHaNsrc",
+            "email": "jonathanmoreldev@gmail.com"
+        }
+    ],
+    "require": {
+        "php": "^7.4",
+        "symfony/http-client": "^5.4",
+        "symfony/config": "^4.4",
+        "symfony/dependency-injection": "^4.4",
+        "symfony/http-kernel": "^4.4",
+        "ext-json": "*"
+    },
+    "autoload": {
+        "psr-4": {
+            "Johnkhansrc\\IaphubBundle\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Johnkhansrc\\IaphubBundle\\Tests\\": "tests/"
+        }
+    },
+    "require-dev": {
+        "symfony/phpunit-bridge": "^6.0",
+        "symfony/framework-bundle": "4.4",
+        "symfony/browser-kit": "^5.4"
+    }
+}
