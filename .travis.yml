@@ -1,38 +1,46 @@
 language: php
 sudo: false
+
 cache:
   directories:
     - $HOME/.composer/cache/files
-    - $HOME/symfony-bridge/.phpunit
+    - vendor/bin/simple-phpunit
+
 env:
   global:
-    - PHPUNIT_FLAGS="-v"
-    - SYMFONY_PHPUNIT_DIR="$HOME/symfony-bridge/.phpunit"
+    - SYMFONY_PHPUNIT_DIR=./bin/.phpunit
+    - SYMFONY_DEPRECATIONS_HELPER=9
+    - ACTION="install"
+
 matrix:
   fast_finish: true
   include:
-    # Minimum supported dependencies with the latest and oldest PHP version
+    - php: 7.3
+      env: SYMFONY="4.4.*"
+        ACTION="update"
     - php: 7.4
-      env: COMPOSER_FLAGS="--prefer-stable --prefer-lowest" SYMFONY_DEPRECATIONS_HELPER="weak_vendors"
-    - php: 7.4
-      env: COMPOSER_FLAGS="--prefer-stable --prefer-lowest" SYMFONY_DEPRECATIONS_HELPER="weak_vendors"
-      # Test the latest stable release
-    - php: 7.4
-      env: STABILITY="dev"
-  allow_failures:
-    # Dev-master is allowed to fail.
-    - env: STABILITY="dev"
+    - php: 8.0
+
 before_install:
-  - if [[ $COVERAGE != true ]]; then phpenv config-rm xdebug.ini || true; fi
-  - if ! [ -z "$STABILITY" ]; then composer config minimum-stability ${STABILITY}; fi;
-  - if ! [ -v "$DEPENDENCIES" ]; then composer require --no-update ${DEPENDENCIES}; fi;
+  - '[[ "$TRAVIS_PHP_VERSION" == "7.4snapshot" ]] || phpenv config-rm xdebug.ini'
+  - composer self-update
+  # Set memory to max (memory fail)
+  - '[[ "$ACTION" == "install" ]] || echo "memory_limit=-1" >> ~/.phpenv/versions/$(phpenv version-name)/etc/conf.d/travis.ini'
+  # Set stability to dev to allow 4.4dev and 5.0dev
+  - '[[ "$ACTION" == "install" ]] || composer config minimum-stability dev'
+  # Change version of symfony when need
+  - '[[ "$ACTION" == "install" ]] || composer config extra.symfony.require $SYMFONY'
+
 install:
-  # To be removed when this issue will be resolved: https://github.com/composer/composer/issues/5355
-  - if [[ "$COMPOSER_FLAGS" == *"--prefer-lowest"* ]]; then composer update --prefer-dist --no-interaction --prefer-stable --quiet; fi
-  - composer update ${COMPOSER_FLAGS} --prefer-dist --no-interaction
+  - php -r "echo ini_get('memory_limit').PHP_EOL;"
+  # install or update
+  - composer $ACTION
   - ./vendor/bin/simple-phpunit install
+
 script:
-  - composer validate --strict --no-check-lock
-  # simple-phpunit is the PHPUnit wrapper provided by the PHPUnit Bridge component and
-  # it helps with testing legacy code and deprecations (composer require symfony/phpunit-bridge)
-  - ./vendor/bin/simple-phpunit $PHPUNIT_FLAGS
+  - ./vendor/bin/simple-phpunit
+  # this checks that the source code follows the Symfony Code Syntax rules
+  - '[[ "$TRAVIS_PHP_VERSION" == "7.4" ]] || ./vendor/bin/php-cs-fixer fix --diff --dry-run -v'
+  #  Fail CI if the repo is in a dirty state after building assets (only for current release ie install)
+  #-  if [[ "$ACTION" == "install" ]]; then yarn install && yarn encore production && git add --all && git diff --staged --exit-code; fi
+  - composer validate
