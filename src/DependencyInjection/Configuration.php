@@ -16,11 +16,9 @@ class Configuration implements ConfigurationInterface
             ->children()
                 ->scalarNode('apikey')
                     ->info('Iaphub server API key. Define it in dashboard.iaphub.com/app/{app_id}/settings (API KEYS section).')
-                    ->isRequired()
                     ->end()
                 ->scalarNode('webhook_auth_token')
                     ->info('Iaphub webhook auth token. Define it in dashboard.iaphub.com/app/{app_id}/settings (WEBHOOKS section).')
-                    ->isRequired()
                     ->end()
             ->end()
         ;
