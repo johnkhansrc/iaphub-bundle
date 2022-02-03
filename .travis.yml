@@ -15,11 +15,9 @@ env:
 matrix:
   fast_finish: true
   include:
-    - php: 7.3
+    - php: 7.4
       env: SYMFONY="4.4.*"
         ACTION="update"
-    - php: 7.4
-    - php: 8.0
 
 before_install:
   - '[[ "$TRAVIS_PHP_VERSION" == "7.4snapshot" ]] || phpenv config-rm xdebug.ini'
@@ -35,7 +33,7 @@ install:
   - php -r "echo ini_get('memory_limit').PHP_EOL;"
   # install or update
   - composer $ACTION
-  - ./vendor/bin/simple-phpunit install
+  - ./vendor/bin/simple-phpunit
 
 script:
   - ./vendor/bin/simple-phpunit
