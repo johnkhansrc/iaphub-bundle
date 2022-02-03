@@ -9,7 +9,7 @@ _https://www.iaphub_
 ### Installation
 Use Composer to install this bundle:
 ```
-composer require johnkhansrc/iaphub-bundle
+composer require johnkhansrc/iaphub-bundle:@dev
 ```
 
 Add the bundle in your application kernel:
