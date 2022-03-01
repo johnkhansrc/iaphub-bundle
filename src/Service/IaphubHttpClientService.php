@@ -197,7 +197,7 @@ class IaphubHttpClientService
     {
         return [
             'Accept' => 'application/json',
-            'Authorization' => "ApiKey {$this->apiKey}"
+            'Authorization' => "ApiKey {$this->getApikey()}"
         ];
     }
 
