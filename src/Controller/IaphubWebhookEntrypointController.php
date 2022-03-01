@@ -56,6 +56,11 @@ class IaphubWebhookEntrypointController extends AbstractController
             return $this->json([], Response::HTTP_UNAUTHORIZED);
         }
 
+        if (!$request->getContent()) {
+            // When add webhook url on Iaphub configuration, Iaphub should verify URL.
+            return $this->json([]);
+        }
+
         $payload = json_decode($request->getContent(), true, 512, JSON_THROW_ON_ERROR);
         $webhook = $this->webhookFactory::build($payload);
 
