@@ -411,25 +411,7 @@ class IaphubHttpClientService
      */
     private function validateParameters(array $queryParameters, string $method)
     {
-        foreach (array_keys($queryParameters) as $parameter) {
-            if (!array_key_exists($parameter, self::VALID_QUERY_PARAMETERS[IaphubHttpClientValidationService::withoutNamespace($method)])) {
-                throw new IaphubBundleBadQueryStringException(
-                    $this->apiUri, array_keys(self::VALID_QUERY_PARAMETERS[IaphubHttpClientValidationService::withoutNamespace($method)]), IaphubHttpClientValidationService::withoutNamespace($method));
-            }
-            if (self::VALID_QUERY_PARAMETERS[IaphubHttpClientValidationService::withoutNamespace($method)][$parameter]) {
-                $this->validateParameterValues(self::VALID_QUERY_PARAMETERS[IaphubHttpClientValidationService::withoutNamespace($method)][$parameter], $queryParameters[$parameter]);
-            }
-        }
-    }
-
-    /**
-     * @throws IaphubBundleBadQueryStringValueException
-     */
-    private function validateParameterValues($acceptedParameterValues, $parameterValue): void
-    {
-        if (!in_array($parameterValue, $acceptedParameterValues, true)) {
-            throw new IaphubBundleBadQueryStringValueException($this->apiUri, $acceptedParameterValues, $parameterValue);
-        }
+        $this->getIaphubHttpClientValidationService()->validateParameters($queryParameters, $method, $this->apiUri);
     }
 
     /**
@@ -438,24 +420,6 @@ class IaphubHttpClientService
      */
     private function validateBodyParameters(array $bodyParameters, string $method): void
     {
-        foreach (array_keys($bodyParameters) as $parameter) {
-            if (!array_key_exists($parameter, self::VALID_BODY_PARAMETERS[IaphubHttpClientValidationService::withoutNamespace($method)])) {
-                throw new IaphubBundleBadQueryStringException(
-                    $this->apiUri, array_keys(self::VALID_BODY_PARAMETERS[IaphubHttpClientValidationService::withoutNamespace($method)]), IaphubHttpClientValidationService::withoutNamespace($method));
-            }
-            if (self::VALID_BODY_PARAMETERS[IaphubHttpClientValidationService::withoutNamespace($method)][$parameter]) {
-                $this->validateBodyParameterValues(self::VALID_BODY_PARAMETERS[IaphubHttpClientValidationService::withoutNamespace($method)][$parameter], $bodyParameters[$parameter]);
-            }
-        }
-    }
-
-    /**
-     * @throws IaphubBundleBadQueryStringValueException
-     */
-    private function validateBodyParameterValues($acceptedParameterValues, $parameterValue): void
-    {
-        if (!in_array($parameterValue, $acceptedParameterValues, true)) {
-            throw new IaphubBundleBadQueryStringValueException($this->apiUri, $acceptedParameterValues, $parameterValue);
-        }
+        $this->getIaphubHttpClientValidationService()->validateBodyParameters($bodyParameters, $method, $this->apiUri);
     }
 }
