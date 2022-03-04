@@ -2,8 +2,6 @@
 
 namespace Johnkhansrc\IaphubBundle\Tests;
 
-use Johnkhansrc\IaphubBundle\Exception\IaphubBundleBadQueryStringException;
-use Johnkhansrc\IaphubBundle\Exception\IaphubBundleBadQueryStringValueException;
 use Johnkhansrc\IaphubBundle\Service\IaphubHttpClientService;
 use Johnkhansrc\IaphubBundle\Tests\Mocks\FakeHTTPCLient;
 use PHPUnit\Framework\TestCase;
