@@ -22,6 +22,7 @@ use Symfony\Contracts\HttpClient\Exception\RedirectionExceptionInterface;
 use Symfony\Contracts\HttpClient\Exception\ServerExceptionInterface;
 use Symfony\Contracts\HttpClient\Exception\TransportExceptionInterface;
 use Symfony\Contracts\HttpClient\HttpClientInterface;
+use Symfony\Contracts\HttpClient\ResponseInterface;
 
 class IaphubHttpClientService
 {
@@ -118,7 +119,7 @@ class IaphubHttpClientService
     /**
      * @throws TransportExceptionInterface
      */
-    public function fetch()
+    public function fetch(): ResponseInterface
     {
         $this->method = 'GET';
 
@@ -134,7 +135,7 @@ class IaphubHttpClientService
     /**
      * @throws TransportExceptionInterface
      */
-    public function fetchWithQueryParameters(array $queryParameters)
+    public function fetchWithQueryParameters(array $queryParameters): ResponseInterface
     {
         $this->method = 'GET';
 
@@ -194,7 +195,7 @@ class IaphubHttpClientService
      * @throws DecodingExceptionInterface
      * @throws ClientExceptionInterface
      * @throws TransportExceptionInterface
-     * @throws ServerExceptionInterface|IaphubBundleBadQueryStringException
+     * @throws ServerExceptionInterface|IaphubBundleBadQueryStringException|IaphubBundleBadQueryStringValueException
      */
     public function getUserMigrate(string $userId, string $appId, ?array $queryParameters = null): string
     {
@@ -218,7 +219,7 @@ class IaphubHttpClientService
 
     /**
      * @throws TransportExceptionInterface
-     * @throws IaphubBundleBadQueryStringException
+     * @throws IaphubBundleBadQueryStringException|IaphubBundleBadQueryStringValueException
      */
     public function postUser(string $userId, array $payloadData, string $appId): void
     {
@@ -234,7 +235,7 @@ class IaphubHttpClientService
      * @throws ServerExceptionInterface
      * @throws RedirectionExceptionInterface
      * @throws DecodingExceptionInterface
-     * @throws ClientExceptionInterface
+     * @throws ClientExceptionInterface|IaphubBundleBadQueryStringValueException
      */
     public function postUserReceipt(string $userId, array $payloadData, string $appId): PostUserReceiptResponse
     {
@@ -253,7 +254,7 @@ class IaphubHttpClientService
      * @throws ClientExceptionInterface
      * @throws TransportExceptionInterface
      * @throws ServerExceptionInterface
-     * @throws IaphubBundleBadQueryStringException
+     * @throws IaphubBundleBadQueryStringException|IaphubBundleBadQueryStringValueException
      */
     public function getPurchase(string $purchaseId, string $appId, ?array $queryParameters = null): Purchase
     {
@@ -279,7 +280,7 @@ class IaphubHttpClientService
      * @throws DecodingExceptionInterface
      * @throws ClientExceptionInterface
      * @throws TransportExceptionInterface
-     * @throws ServerExceptionInterface|IaphubBundleBadQueryStringException
+     * @throws ServerExceptionInterface|IaphubBundleBadQueryStringException|IaphubBundleBadQueryStringValueException
      */
     public function getPurchases(string $appId, ?array $queryParameters = null): GetPurchases
     {
