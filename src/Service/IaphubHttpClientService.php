@@ -22,6 +22,7 @@ use Symfony\Contracts\HttpClient\Exception\RedirectionExceptionInterface;
 use Symfony\Contracts\HttpClient\Exception\ServerExceptionInterface;
 use Symfony\Contracts\HttpClient\Exception\TransportExceptionInterface;
 use Symfony\Contracts\HttpClient\HttpClientInterface;
+use Symfony\Contracts\HttpClient\ResponseInterface;
 
 class IaphubHttpClientService
 {
@@ -33,51 +34,6 @@ class IaphubHttpClientService
     public const GET_PURCHASES_URI = '/v1/app/:appId/purchases';
     public const GET_SUBSCRIPTION_URI = '/v1/app/:appId/subscription/:originalPurchaseId';
     public const GET_RECEIPT_URI = '/v1/app/:appId/receipt/:receiptId';
-
-    public const VALID_QUERY_PARAMETERS = [
-        'getUser' => [
-            'environment' => ['production', 'staging', 'development'],
-            'platform' => ['ios', 'android'],
-            'upsert' => []
-        ],
-        'getUserMigrate' => ['environment' => ['production', 'staging', 'development']],
-        'getPurchase' => ['environment' => ['production', 'staging', 'development']],
-        'getPurchases' => [
-            'environment' => ['production', 'staging', 'development'],
-            'page' => [],
-            'limit' => [],
-            'order' => ['desc', 'asc'],
-            'fromDate' => [],
-            'toDate' => [],
-            'user' => [],
-            'userId' => [],
-            'originalPurchase' => [],
-        ],
-        'getSubscription' => ['environment' => ['production', 'staging', 'development']],
-        'getReceipt' => ['environment' => ['production', 'staging', 'development']],
-    ];
-    public const VALID_BODY_PARAMETERS = [
-        'postUser' => [
-            'environment' => ['production', 'staging', 'development'],
-            'tags' => [],
-            'country' => [],
-            'userId' => [],
-            'upsert' => []
-        ],
-        'postUserReceipt' => [
-            'environment' => ['production', 'staging', 'development'],
-            'platform' => ['ios', 'android'],
-            'token' => [],
-            'sku' => [],
-            'context' => ['refresh', 'purchase', 'restore'],
-            'prorationMode' => [
-                'immediate_with_time_proration',
-                'immediate_and_charge_prorated_price',
-                'immediate_without_proration'
-            ],
-            'upsert' => []
-        ],
-    ];
     public const IAPHUB_API_DOMAIN = 'https://api.iaphub.com';
     private string $apikey;
     private IaphubHttpClientValidationService $iaphubHttpClientValidationService;
@@ -163,7 +119,7 @@ class IaphubHttpClientService
     /**
      * @throws TransportExceptionInterface
      */
-    public function fetch()
+    public function fetch(): ResponseInterface
     {
         $this->method = 'GET';
 
@@ -179,7 +135,7 @@ class IaphubHttpClientService
     /**
      * @throws TransportExceptionInterface
      */
-    public function fetchWithQueryParameters(array $queryParameters)
+    public function fetchWithQueryParameters(array $queryParameters): ResponseInterface
     {
         $this->method = 'GET';
 
@@ -239,7 +195,7 @@ class IaphubHttpClientService
      * @throws DecodingExceptionInterface
      * @throws ClientExceptionInterface
      * @throws TransportExceptionInterface
-     * @throws ServerExceptionInterface|IaphubBundleBadQueryStringException
+     * @throws ServerExceptionInterface|IaphubBundleBadQueryStringException|IaphubBundleBadQueryStringValueException
      */
     public function getUserMigrate(string $userId, string $appId, ?array $queryParameters = null): string
     {
@@ -263,7 +219,7 @@ class IaphubHttpClientService
 
     /**
      * @throws TransportExceptionInterface
-     * @throws IaphubBundleBadQueryStringException
+     * @throws IaphubBundleBadQueryStringException|IaphubBundleBadQueryStringValueException
      */
     public function postUser(string $userId, array $payloadData, string $appId): void
     {
@@ -279,7 +235,7 @@ class IaphubHttpClientService
      * @throws ServerExceptionInterface
      * @throws RedirectionExceptionInterface
      * @throws DecodingExceptionInterface
-     * @throws ClientExceptionInterface
+     * @throws ClientExceptionInterface|IaphubBundleBadQueryStringValueException
      */
     public function postUserReceipt(string $userId, array $payloadData, string $appId): PostUserReceiptResponse
     {
@@ -298,7 +254,7 @@ class IaphubHttpClientService
      * @throws ClientExceptionInterface
      * @throws TransportExceptionInterface
      * @throws ServerExceptionInterface
-     * @throws IaphubBundleBadQueryStringException
+     * @throws IaphubBundleBadQueryStringException|IaphubBundleBadQueryStringValueException
      */
     public function getPurchase(string $purchaseId, string $appId, ?array $queryParameters = null): Purchase
     {
@@ -324,7 +280,7 @@ class IaphubHttpClientService
      * @throws DecodingExceptionInterface
      * @throws ClientExceptionInterface
      * @throws TransportExceptionInterface
-     * @throws ServerExceptionInterface|IaphubBundleBadQueryStringException
+     * @throws ServerExceptionInterface|IaphubBundleBadQueryStringException|IaphubBundleBadQueryStringValueException
      */
     public function getPurchases(string $appId, ?array $queryParameters = null): GetPurchases
     {
@@ -399,36 +355,13 @@ class IaphubHttpClientService
         return ReceiptFactory::build($response->toArray());
     }
 
-    public function sayHelloForTest(): string
-    {
-        return "Test reussi !";
-    }
-
     /**
      * @throws IaphubBundleBadQueryStringException
      * @throws IaphubBundleBadQueryStringValueException
      */
-    private function validateParameters(array $queryParameters, string $method)
+    private function validateParameters(array $queryParameters, string $method): void
     {
-        foreach (array_keys($queryParameters) as $parameter) {
-            if (!array_key_exists($parameter, self::VALID_QUERY_PARAMETERS[$method])) {
-                throw new IaphubBundleBadQueryStringException(
-                    $this->apiUri, array_keys(self::VALID_QUERY_PARAMETERS[$method]), $method);
-            }
-            if (self::VALID_QUERY_PARAMETERS[$method][$parameter]) {
-                $this->validateParameterValues(self::VALID_QUERY_PARAMETERS[$method][$parameter], $queryParameters[$parameter]);
-            }
-        }
-    }
-
-    /**
-     * @throws IaphubBundleBadQueryStringValueException
-     */
-    private function validateParameterValues($acceptedParameterValues, $parameterValue): void
-    {
-        if (!in_array($parameterValue, $acceptedParameterValues, true)) {
-            throw new IaphubBundleBadQueryStringValueException($this->apiUri, $acceptedParameterValues, $parameterValue);
-        }
+        $this->getIaphubHttpClientValidationService()->validateParameters($queryParameters, $method, $this->apiUri);
     }
 
     /**
@@ -437,24 +370,6 @@ class IaphubHttpClientService
      */
     private function validateBodyParameters(array $bodyParameters, string $method): void
     {
-        foreach (array_keys($bodyParameters) as $parameter) {
-            if (!array_key_exists($parameter, self::VALID_BODY_PARAMETERS[$method])) {
-                throw new IaphubBundleBadQueryStringException(
-                    $this->apiUri, array_keys(self::VALID_BODY_PARAMETERS[$method]), $method);
-            }
-            if (self::VALID_QUERY_PARAMETERS[$method][$parameter]) {
-                $this->validateBodyParameterValues(self::VALID_BODY_PARAMETERS[$method][$parameter], $bodyParameters[$parameter]);
-            }
-        }
-    }
-
-    /**
-     * @throws IaphubBundleBadQueryStringValueException
-     */
-    private function validateBodyParameterValues($acceptedParameterValues, $parameterValue): void
-    {
-        if (!in_array($parameterValue, $acceptedParameterValues, true)) {
-            throw new IaphubBundleBadQueryStringValueException($this->apiUri, $acceptedParameterValues, $parameterValue);
-        }
+        $this->getIaphubHttpClientValidationService()->validateBodyParameters($bodyParameters, $method, $this->apiUri);
     }
 }
