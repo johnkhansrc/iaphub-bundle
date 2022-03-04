@@ -28,6 +28,7 @@ class IaphubHttpClientValidationService
         ],
         'getSubscription' => ['environment' => ['production', 'staging', 'development']],
         'getReceipt' => ['environment' => ['production', 'staging', 'development']],
+        'postUserReceipt' => ['appId', 'userId'],
     ];
     public const VALID_BODY_PARAMETERS = [
         'postUser' => [
@@ -52,7 +53,7 @@ class IaphubHttpClientValidationService
         ],
     ];
 
-    private static function withoutNamespace(string $method)
+    public static function withoutNamespace(string $method)
     {
         return preg_replace('/[a-zA-Z\\\]+[\:]{2}/', '', $method);
     }
@@ -95,7 +96,7 @@ class IaphubHttpClientValidationService
                 throw new IaphubBundleBadQueryStringException(
                     $apiUri, array_keys(self::VALID_BODY_PARAMETERS[self::withoutNamespace($method)]), self::withoutNamespace($method));
             }
-            if (self::VALID_QUERY_PARAMETERS[self::withoutNamespace($method)][$parameter]) {
+            if (self::VALID_BODY_PARAMETERS[self::withoutNamespace($method)][$parameter]) {
                 $this->validateBodyParameterValues(self::VALID_BODY_PARAMETERS[self::withoutNamespace($method)][$parameter], $bodyParameters[$parameter], $apiUri);
             }
         }

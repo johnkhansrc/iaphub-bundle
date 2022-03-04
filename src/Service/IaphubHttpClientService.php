@@ -55,6 +55,7 @@ class IaphubHttpClientService
         ],
         'getSubscription' => ['environment' => ['production', 'staging', 'development']],
         'getReceipt' => ['environment' => ['production', 'staging', 'development']],
+        'postUserReceipt' => ['appId', 'userId']
     ];
     public const VALID_BODY_PARAMETERS = [
         'postUser' => [
@@ -411,12 +412,12 @@ class IaphubHttpClientService
     private function validateParameters(array $queryParameters, string $method)
     {
         foreach (array_keys($queryParameters) as $parameter) {
-            if (!array_key_exists($parameter, self::VALID_QUERY_PARAMETERS[$method])) {
+            if (!array_key_exists($parameter, self::VALID_QUERY_PARAMETERS[IaphubHttpClientValidationService::withoutNamespace($method)])) {
                 throw new IaphubBundleBadQueryStringException(
-                    $this->apiUri, array_keys(self::VALID_QUERY_PARAMETERS[$method]), $method);
+                    $this->apiUri, array_keys(self::VALID_QUERY_PARAMETERS[IaphubHttpClientValidationService::withoutNamespace($method)]), IaphubHttpClientValidationService::withoutNamespace($method));
             }
-            if (self::VALID_QUERY_PARAMETERS[$method][$parameter]) {
-                $this->validateParameterValues(self::VALID_QUERY_PARAMETERS[$method][$parameter], $queryParameters[$parameter]);
+            if (self::VALID_QUERY_PARAMETERS[IaphubHttpClientValidationService::withoutNamespace($method)][$parameter]) {
+                $this->validateParameterValues(self::VALID_QUERY_PARAMETERS[IaphubHttpClientValidationService::withoutNamespace($method)][$parameter], $queryParameters[$parameter]);
             }
         }
     }
@@ -438,12 +439,12 @@ class IaphubHttpClientService
     private function validateBodyParameters(array $bodyParameters, string $method): void
     {
         foreach (array_keys($bodyParameters) as $parameter) {
-            if (!array_key_exists($parameter, self::VALID_BODY_PARAMETERS[$method])) {
+            if (!array_key_exists($parameter, self::VALID_BODY_PARAMETERS[IaphubHttpClientValidationService::withoutNamespace($method)])) {
                 throw new IaphubBundleBadQueryStringException(
-                    $this->apiUri, array_keys(self::VALID_BODY_PARAMETERS[$method]), $method);
+                    $this->apiUri, array_keys(self::VALID_BODY_PARAMETERS[IaphubHttpClientValidationService::withoutNamespace($method)]), IaphubHttpClientValidationService::withoutNamespace($method));
             }
-            if (self::VALID_QUERY_PARAMETERS[$method][$parameter]) {
-                $this->validateBodyParameterValues(self::VALID_BODY_PARAMETERS[$method][$parameter], $bodyParameters[$parameter]);
+            if (self::VALID_BODY_PARAMETERS[IaphubHttpClientValidationService::withoutNamespace($method)][$parameter]) {
+                $this->validateBodyParameterValues(self::VALID_BODY_PARAMETERS[IaphubHttpClientValidationService::withoutNamespace($method)][$parameter], $bodyParameters[$parameter]);
             }
         }
     }
