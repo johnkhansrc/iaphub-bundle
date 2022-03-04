@@ -33,52 +33,6 @@ class IaphubHttpClientService
     public const GET_PURCHASES_URI = '/v1/app/:appId/purchases';
     public const GET_SUBSCRIPTION_URI = '/v1/app/:appId/subscription/:originalPurchaseId';
     public const GET_RECEIPT_URI = '/v1/app/:appId/receipt/:receiptId';
-
-    public const VALID_QUERY_PARAMETERS = [
-        'getUser' => [
-            'environment' => ['production', 'staging', 'development'],
-            'platform' => ['ios', 'android'],
-            'upsert' => []
-        ],
-        'getUserMigrate' => ['environment' => ['production', 'staging', 'development']],
-        'getPurchase' => ['environment' => ['production', 'staging', 'development']],
-        'getPurchases' => [
-            'environment' => ['production', 'staging', 'development'],
-            'page' => [],
-            'limit' => [],
-            'order' => ['desc', 'asc'],
-            'fromDate' => [],
-            'toDate' => [],
-            'user' => [],
-            'userId' => [],
-            'originalPurchase' => [],
-        ],
-        'getSubscription' => ['environment' => ['production', 'staging', 'development']],
-        'getReceipt' => ['environment' => ['production', 'staging', 'development']],
-        'postUserReceipt' => ['appId', 'userId']
-    ];
-    public const VALID_BODY_PARAMETERS = [
-        'postUser' => [
-            'environment' => ['production', 'staging', 'development'],
-            'tags' => [],
-            'country' => [],
-            'userId' => [],
-            'upsert' => []
-        ],
-        'postUserReceipt' => [
-            'environment' => ['production', 'staging', 'development'],
-            'platform' => ['ios', 'android'],
-            'token' => [],
-            'sku' => [],
-            'context' => ['refresh', 'purchase', 'restore'],
-            'prorationMode' => [
-                'immediate_with_time_proration',
-                'immediate_and_charge_prorated_price',
-                'immediate_without_proration'
-            ],
-            'upsert' => []
-        ],
-    ];
     public const IAPHUB_API_DOMAIN = 'https://api.iaphub.com';
     private string $apikey;
     private IaphubHttpClientValidationService $iaphubHttpClientValidationService;
@@ -398,11 +352,6 @@ class IaphubHttpClientService
         }
 
         return ReceiptFactory::build($response->toArray());
-    }
-
-    public function sayHelloForTest(): string
-    {
-        return "Test reussi !";
     }
 
     /**
