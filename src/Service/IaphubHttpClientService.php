@@ -358,7 +358,7 @@ class IaphubHttpClientService
      * @throws IaphubBundleBadQueryStringException
      * @throws IaphubBundleBadQueryStringValueException
      */
-    private function validateParameters(array $queryParameters, string $method)
+    private function validateParameters(array $queryParameters, string $method): void
     {
         $this->getIaphubHttpClientValidationService()->validateParameters($queryParameters, $method, $this->apiUri);
     }
