@@ -21,7 +21,7 @@ class IaphubWebhookEntrypointControllerTest extends TestCase
             'webhook_auth_token' => 'bar',
         ]);
 
-        $payload = file_get_contents(__DIR__.'/../mocks/webhooksPayloads/purchaseBodyMocks.json');
+        $payload = file_get_contents(__DIR__ . '/../Mocks/webhooksPayloads/purchaseBodyMocks.json');
         $client = new KernelBrowser($kernel);
         $method = 'POST';
         $uri = '/webhook_entry_point/';

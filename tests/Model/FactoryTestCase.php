@@ -7,7 +7,7 @@ use PHPUnit\Framework\TestCase;
 
 class FactoryTestCase extends TestCase
 {
-    public const PARTIAL_MOCKS_PATH = __DIR__ . '/../mocks/webhooksPayloads/%s.json';
+    public const PARTIAL_MOCKS_PATH = __DIR__ . '/../Mocks/webhooksPayloads/%s.json';
     protected string $mockName;
 
     protected function mockPath(): string
