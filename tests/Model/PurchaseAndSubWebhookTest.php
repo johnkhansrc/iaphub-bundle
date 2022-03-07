@@ -43,11 +43,6 @@ class PurchaseAndSubWebhookTest extends FactoryTestCase
     {
         $this->mockName = $mockName;
 
-//        dump($this->decode());
-//        if ('subscriptionCancelBodyMocks' === $mockName) {
-//            dd($this->decode());
-//        }
-
         echo "\nTest for $mockName payload";
 
         $webhook = WebhookFactory::build($this->decode());
