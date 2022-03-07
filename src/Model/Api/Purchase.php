@@ -59,7 +59,7 @@ class Purchase
     /**
      * Android purchase token.
      */
-    private string $androidToken;
+    private ?string $androidToken;
     /**
      * Product id.
      */
@@ -85,15 +85,15 @@ class Purchase
     /**
      * Listing id.
      */
-    private string $listing;
+    private ?string $listing;
     /**
      * Store id.
      */
-    private string $store;
+    private ?string $store;
     /**
      * Store segment index (when a store is used for testing, 0 by default).
      */
-    private int $storeSegmentIndex;
+    private ?int $storeSegmentIndex;
     /**
      * Price currency.
      */
@@ -292,14 +292,14 @@ class Purchase
                                 string $userId,
                                 ?array $userIds,
                                 string $receipt,
-                                string $androidToken,
+                                ?string $androidToken,
                                 string $product,
                                 string $productSku,
                                 string $productType,
                                 ?string $productGroupName,
-                                string $listing,
-                                string $store,
-                                int $storeSegmentIndex,
+                                ?string $listing,
+                                ?string $store,
+                                ?int $storeSegmentIndex,
                                 string $currency,
                                 float $price,
                                 string $convertedCurrency,
@@ -600,7 +600,7 @@ class Purchase
     /**
      * @return string
      */
-    public function getAndroidToken(): string
+    public function getAndroidToken(): ?string
     {
         return $this->androidToken;
     }
@@ -609,7 +609,7 @@ class Purchase
      * @param string $androidToken
      * @return Purchase
      */
-    public function setAndroidToken(string $androidToken): Purchase
+    public function setAndroidToken(?string $androidToken): Purchase
     {
         $this->androidToken = $androidToken;
         return $this;
@@ -690,7 +690,7 @@ class Purchase
     /**
      * @return string
      */
-    public function getListing(): string
+    public function getListing(): ?string
     {
         return $this->listing;
     }
@@ -699,7 +699,7 @@ class Purchase
      * @param string $listing
      * @return Purchase
      */
-    public function setListing(string $listing): Purchase
+    public function setListing(?string $listing): Purchase
     {
         $this->listing = $listing;
         return $this;
@@ -708,7 +708,7 @@ class Purchase
     /**
      * @return string
      */
-    public function getStore(): string
+    public function getStore(): ?string
     {
         return $this->store;
     }
@@ -717,7 +717,7 @@ class Purchase
      * @param string $store
      * @return Purchase
      */
-    public function setStore(string $store): Purchase
+    public function setStore(?string $store): Purchase
     {
         $this->store = $store;
         return $this;
@@ -726,7 +726,7 @@ class Purchase
     /**
      * @return int
      */
-    public function getStoreSegmentIndex(): int
+    public function getStoreSegmentIndex(): ?int
     {
         return $this->storeSegmentIndex;
     }
@@ -735,7 +735,7 @@ class Purchase
      * @param int $storeSegmentIndex
      * @return Purchase
      */
-    public function setStoreSegmentIndex(int $storeSegmentIndex): Purchase
+    public function setStoreSegmentIndex(?int $storeSegmentIndex): Purchase
     {
         $this->storeSegmentIndex = $storeSegmentIndex;
         return $this;
