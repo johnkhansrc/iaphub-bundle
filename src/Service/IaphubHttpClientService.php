@@ -182,11 +182,7 @@ class IaphubHttpClientService
             $response = $this->fetch();
         }
 
-        if (200 !== $response->getStatusCode()) {
-            throw new IaphubApiResponseException($this->method, $this->apiUri, $response->getStatusCode());
-        }
-
-        self::verifyStatus($response);
+        $this->validResponse($response);
 
         return GetUserApiResponseFactory::build($response->toArray());
     }
@@ -210,9 +206,7 @@ class IaphubHttpClientService
             $response = $this->fetch();
         }
 
-        if (200 !== $response->getStatusCode()) {
-            throw new IaphubApiResponseException($this->method, $this->apiUri, $response->getStatusCode());
-        }
+        $this->validResponse($response);
 
         $responsePayload = $response->toArray();
 
@@ -268,6 +262,23 @@ class IaphubHttpClientService
 
     /**
      * @throws IaphubApiResponseException
+     * @throws TransportExceptionInterface
+     * @throws ServerExceptionInterface
+     * @throws RedirectionExceptionInterface
+     * @throws DecodingExceptionInterface
+     * @throws ClientExceptionInterface
+     */
+    private function validResponse(ResponseInterface $response): void
+    {
+        if (200 !== $response->getStatusCode()) {
+            throw new IaphubApiResponseException($this->method, $this->apiUri, $response->getStatusCode());
+        }
+        
+        self::verifyStatus($response);
+    }
+
+    /**
+     * @throws IaphubApiResponseException
      * @throws RedirectionExceptionInterface
      * @throws DecodingExceptionInterface
      * @throws ClientExceptionInterface
@@ -286,11 +297,7 @@ class IaphubHttpClientService
             $response = $this->fetch();
         }
 
-        if (200 !== $response->getStatusCode()) {
-            throw new IaphubApiResponseException($this->method, $this->apiUri, $response->getStatusCode());
-        }
-
-        self::verifyStatus($response);
+        $this->validResponse($response);
 
         return PurchaseFactory::buildPurchase($response->toArray());
     }
@@ -314,11 +321,7 @@ class IaphubHttpClientService
             $response = $this->fetch();
         }
 
-        if (200 !== $response->getStatusCode()) {
-            throw new IaphubApiResponseException($this->method, $this->apiUri, $response->getStatusCode());
-        }
-
-        self::verifyStatus($response);
+        $this->validResponse($response);
 
         return GetPurchasesFactory::build($response->toArray());
     }
@@ -344,11 +347,7 @@ class IaphubHttpClientService
             $response = $this->fetch();
         }
 
-        if (200 !== $response->getStatusCode()) {
-            throw new IaphubApiResponseException($this->method, $this->apiUri, $response->getStatusCode());
-        }
-
-        self::verifyStatus($response);
+        $this->validResponse($response);
 
         return PurchaseFactory::buildPurchase($response->toArray());
     }
@@ -373,11 +372,7 @@ class IaphubHttpClientService
             $response = $this->fetch();
         }
 
-        if (200 !== $response->getStatusCode()) {
-            throw new IaphubApiResponseException($this->method, $this->apiUri, $response->getStatusCode());
-        }
-
-        self::verifyStatus($response);
+        $this->validResponse($response);
 
         return ReceiptFactory::build($response->toArray());
     }
