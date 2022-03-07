@@ -28,7 +28,7 @@ class Transaction
      *     failed: The webhook has failed.
      * @var string("success", "failed")
      */
-    private string $webhookStatus;
+    private ?string $webhookStatus;
     /**
      * Only if the product has a group
      * Group id.
@@ -69,7 +69,7 @@ class Transaction
                                 string $sku,
                                 string $purchase,
                                 DateTime $purchaseDate,
-                                string $webhookStatus,
+                                ?string $webhookStatus,
                                 ?string $group,
                                 ?string $groupName,
                                 ?DateTime $expirationDate,
@@ -167,7 +167,7 @@ class Transaction
     /**
      * @return string
      */
-    public function getWebhookStatus(): string
+    public function getWebhookStatus(): ?string
     {
         return $this->webhookStatus;
     }
@@ -176,7 +176,7 @@ class Transaction
      * @param string $webhookStatus
      * @return Transaction
      */
-    public function setWebhookStatus(string $webhookStatus): Transaction
+    public function setWebhookStatus(?string $webhookStatus): Transaction
     {
         $this->webhookStatus = $webhookStatus;
         return $this;

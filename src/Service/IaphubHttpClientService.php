@@ -251,12 +251,19 @@ class IaphubHttpClientService
      * @throws RedirectionExceptionInterface
      * @throws DecodingExceptionInterface
      * @throws ClientExceptionInterface
+     * @throws Exception
      */
     public static function verifyStatus(ResponseInterface $response): void
     {
         $data = $response->toArray();
-        if (isset($data['status']) && 'failed' === $data['status']) {
-            throw new Exception("Iaphub API success response but return failed status .");
+        if (isset($data['status']) && in_array($data['status'], ['failed', 'expired', 'invalid'])) {
+            throw new Exception("Iaphub API success response but return {$data['status']} status .\nFind more details on your Iaphub dashboard");
+        }
+        if (isset($data['status']) && 'stale' === $data['status']) {
+            throw new Exception("The purchase is stale, no purchase still valid where found");
+        }
+        if (isset($data['status']) && 'deferred' === $data['status']) {
+            throw new Exception("The receipt is deferred, pending purchase detected, its final status is pending external action");
         }
     }
 
