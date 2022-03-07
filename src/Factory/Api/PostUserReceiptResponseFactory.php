@@ -11,20 +11,15 @@ class PostUserReceiptResponseFactory
      */
     public static function build(array $data): PostUserReceiptResponse
     {
-        try {
-
-            $newTransactions = [];
-            foreach ($data['newTransactions'] as $transactionData) {
-                $newTransactions[] = TransactionFactory::build($transactionData);
-            }
-            $oldTransactions = [];
-            foreach ($data['oldTransactions'] as $transactionData) {
-                $oldTransactions[] = TransactionFactory::build($transactionData);
-            }
-
-            return new PostUserReceiptResponse($data['status'], $newTransactions, $oldTransactions);
-        } catch (\Exception $exception) {
-            dd($data, $exception);
+        $newTransactions = [];
+        foreach ($data['newTransactions'] as $transactionData) {
+            $newTransactions[] = TransactionFactory::build($transactionData);
         }
+        $oldTransactions = [];
+        foreach ($data['oldTransactions'] as $transactionData) {
+            $oldTransactions[] = TransactionFactory::build($transactionData);
+        }
+
+        return new PostUserReceiptResponse($data['status'], $newTransactions, $oldTransactions);
     }
 }
