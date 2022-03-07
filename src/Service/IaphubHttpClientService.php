@@ -186,6 +186,8 @@ class IaphubHttpClientService
             throw new IaphubApiResponseException($this->method, $this->apiUri, $response->getStatusCode());
         }
 
+        self::verifyStatus($response);
+
         return GetUserApiResponseFactory::build($response->toArray());
     }
 
@@ -244,7 +246,24 @@ class IaphubHttpClientService
         $this->validateBodyParameters($payloadData, __METHOD__);
         $response = $this->post($payloadData);
 
+        self::verifyStatus($response);
+
         return PostUserReceiptResponseFactory::build($response->toArray());
+    }
+
+    /**
+     * @throws TransportExceptionInterface
+     * @throws ServerExceptionInterface
+     * @throws RedirectionExceptionInterface
+     * @throws DecodingExceptionInterface
+     * @throws ClientExceptionInterface
+     */
+    public static function verifyStatus(ResponseInterface $response): void
+    {
+        $data = $response->toArray();
+        if (isset($data['status']) && 'failed' === $data['status']) {
+            throw new Exception("Iaphub API success response but return failed status .");
+        }
     }
 
     /**
@@ -271,6 +290,8 @@ class IaphubHttpClientService
             throw new IaphubApiResponseException($this->method, $this->apiUri, $response->getStatusCode());
         }
 
+        self::verifyStatus($response);
+
         return PurchaseFactory::buildPurchase($response->toArray());
     }
 
@@ -296,6 +317,8 @@ class IaphubHttpClientService
         if (200 !== $response->getStatusCode()) {
             throw new IaphubApiResponseException($this->method, $this->apiUri, $response->getStatusCode());
         }
+
+        self::verifyStatus($response);
 
         return GetPurchasesFactory::build($response->toArray());
     }
@@ -325,6 +348,8 @@ class IaphubHttpClientService
             throw new IaphubApiResponseException($this->method, $this->apiUri, $response->getStatusCode());
         }
 
+        self::verifyStatus($response);
+
         return PurchaseFactory::buildPurchase($response->toArray());
     }
 
@@ -351,6 +376,8 @@ class IaphubHttpClientService
         if (200 !== $response->getStatusCode()) {
             throw new IaphubApiResponseException($this->method, $this->apiUri, $response->getStatusCode());
         }
+
+        self::verifyStatus($response);
 
         return ReceiptFactory::build($response->toArray());
     }
