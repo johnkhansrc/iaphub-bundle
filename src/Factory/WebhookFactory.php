@@ -97,8 +97,8 @@ class WebhookFactory
                 new DateTime($dataPayload['expirationDate']),
                 isset($dataPayload['autoResumeDate']) ? new DateTime($dataPayload['autoResumeDate']) : null,
                 $dataPayload['nextPurchase'] ?? null,
-                $dataPayload['linkedPurchase'],
-                $dataPayload['originalPurchase']
+                $dataPayload['linkedPurchase'] ?? null,
+                $dataPayload['originalPurchase'] ?? null
             ) : null,
         );
     }

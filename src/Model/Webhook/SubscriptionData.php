@@ -104,11 +104,11 @@ class SubscriptionData
     /**
      * Previous purchase id of a renewable subscription.
      */
-    private string $linkedPurchase;
+    private ?string $linkedPurchase;
     /**
      * Original purchase id of a renewable subscription.
      */
-    private string $originalPurchase;
+    private ?string $originalPurchase;
 
     public function __construct(
         bool $isSubscriptionActive,
@@ -125,8 +125,8 @@ class SubscriptionData
         DateTime $expirationDate,
         ?DateTime $autoResumeDate,
         ?string $nextPurchase,
-        string $linkedPurchase,
-        string $originalPurchase
+        ?string $linkedPurchase,
+        ?string $originalPurchase
     )
     {
         $this->isSubscriptionActive = $isSubscriptionActive;
@@ -400,36 +400,36 @@ class SubscriptionData
     }
 
     /**
-     * @return string
+     * @return null|string
      */
-    public function getLinkedPurchase(): string
+    public function getLinkedPurchase(): ?string
     {
         return $this->linkedPurchase;
     }
 
     /**
-     * @param string $linkedPurchase
+     * @param null|string $linkedPurchase
      * @return SubscriptionData
      */
-    public function setLinkedPurchase(string $linkedPurchase): SubscriptionData
+    public function setLinkedPurchase(?string $linkedPurchase): SubscriptionData
     {
         $this->linkedPurchase = $linkedPurchase;
         return $this;
     }
 
     /**
-     * @return string
+     * @return null|string
      */
-    public function getOriginalPurchase(): string
+    public function getOriginalPurchase(): ?string
     {
         return $this->originalPurchase;
     }
 
     /**
-     * @param string $originalPurchase
+     * @param null|string $originalPurchase
      * @return SubscriptionData
      */
-    public function setOriginalPurchase(string $originalPurchase): SubscriptionData
+    public function setOriginalPurchase(?string $originalPurchase): SubscriptionData
     {
         $this->originalPurchase = $originalPurchase;
         return $this;
