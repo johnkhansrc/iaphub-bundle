@@ -22,13 +22,12 @@ use Johnkhansrc\IaphubBundle\Exception\IaphubUnsuportedWebhookException;
 use Johnkhansrc\IaphubBundle\Factory\WebhookFactory;
 use Johnkhansrc\IaphubBundle\Service\IaphubWebhookRequestValidatorService;
 use JsonException;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
-class IaphubWebhookEntrypointController extends AbstractController
+class IaphubWebhookEntrypointController
 {
     private WebhookFactory $webhookFactory;
     private ?EventDispatcherInterface $eventDispatcher;
@@ -57,10 +56,9 @@ class IaphubWebhookEntrypointController extends AbstractController
         }
 
         $payload = json_decode($request->getContent(), true, 512, JSON_THROW_ON_ERROR);
-
         if ('test' === $payload['type']) {
             // When add webhook url on Iaphub configuration, Iaphub should verify URL.
-            return $this->json([]);
+            return $this->json();
         }
 
         $webhook = $this->webhookFactory::build($payload);
@@ -113,9 +111,14 @@ class IaphubWebhookEntrypointController extends AbstractController
         }
 
         if ($this->eventDispatcher) {
-            $this->eventDispatcher->dispatch($event::NAME, $event);
+            $this->eventDispatcher->dispatch($event, $event::NAME);
         }
 
-        return $this->json([]);
+        return $this->json();
+    }
+
+    public function json(): JsonResponse
+    {
+        return new JsonResponse(null, 200);
     }
 }

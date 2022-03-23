@@ -10,8 +10,8 @@ class Configuration implements ConfigurationInterface
 
     public function getConfigTreeBuilder()
     {
-        $treeBuilder = new TreeBuilder();
-        $rootNode = $treeBuilder->root('johnkhansrc_iaphub');
+        $treeBuilder = new TreeBuilder('johnkhansrc_iaphub');
+        $rootNode = $treeBuilder->getRootNode();
         $rootNode
             ->children()
                 ->scalarNode('apikey')

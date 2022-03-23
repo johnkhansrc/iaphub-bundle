@@ -3,7 +3,9 @@
 namespace Johnkhansrc\IaphubBundle\Event;
 
 use Johnkhansrc\IaphubBundle\Model\Webhook\Webhook;
-use Symfony\Component\EventDispatcher\Event;
+use Symfony\Contracts\EventDispatcher\Event;
+
+//use Symfony\Component\EventDispatcher\Event;
 
 class IaphubWebhookEvent extends Event
 {
