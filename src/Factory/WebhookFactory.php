@@ -63,7 +63,7 @@ class WebhookFactory
             $dataPayload['product'],
             $dataPayload['productSku'],
             $dataPayload['productType'],
-            $dataPayload['productGroup'] ?? null,
+            $dataPayload['productGroupName'] ?? null,
             $dataPayload['listing'],
             $dataPayload['store'],
             $dataPayload['storeSegmentIndex'] ?? null,
