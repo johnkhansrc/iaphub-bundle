@@ -1,4 +1,7 @@
 # iaphub-bundle
+
+A project initiated by [EmprunteMonToutou](https://github.com/empruntemontoutou)
+
 ## An Iaphub integration for symfony application for receive webhooks and manage Iaphub API
 
 _https://www.iaphub_
