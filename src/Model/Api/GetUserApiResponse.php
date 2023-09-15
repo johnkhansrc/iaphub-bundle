@@ -6,6 +6,7 @@ class GetUserApiResponse
 {
     /**
      * User tags.
+     * @var string[]|null
      */
     private ?array $tags;
     /**
@@ -20,7 +21,7 @@ class GetUserApiResponse
     private array $activeProducts;
 
     /**
-     * @param array|null $tags
+     * @param string[]|null $tags
      * @param ProductsForSale[] $productsForSale
      * @param ActiveProducts[] $activeProducts
      */
@@ -32,7 +33,7 @@ class GetUserApiResponse
     }
 
     /**
-     * @return array|null
+     * @return string[]|null
      */
     public function getTags(): ?array
     {
@@ -40,7 +41,7 @@ class GetUserApiResponse
     }
 
     /**
-     * @param array|null $tags
+     * @param string[]|null $tags
      * @return GetUserApiResponse
      */
     public function setTags(?array $tags): GetUserApiResponse

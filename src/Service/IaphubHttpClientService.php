@@ -102,7 +102,7 @@ class IaphubHttpClientService
      * @param mixed[] $body
      * @throws TransportExceptionInterface
      */
-    public function post(array $body)
+    public function post(array $body): ResponseInterface
     {
         $this->method = 'POST';
 
@@ -133,6 +133,7 @@ class IaphubHttpClientService
     }
 
     /**
+     * @param mixed[] $queryParameters
      * @throws TransportExceptionInterface
      */
     public function fetchWithQueryParameters(array $queryParameters): ResponseInterface
@@ -149,6 +150,9 @@ class IaphubHttpClientService
         );
     }
 
+    /**
+     * @return array<string, string>
+     */
     public function header(): array
     {
         return [
@@ -157,12 +161,13 @@ class IaphubHttpClientService
         ];
     }
 
-    public function setUri($urlParametersNames, $urlParametersValues, $uri): void
+    public function setUri(string $urlParametersNames, string $urlParametersValues, string $uri): void
     {
         $this->apiUri = str_replace($urlParametersNames, $urlParametersValues, $uri);
     }
 
     /**
+     * @param mixed[]|null $queryParameters
      * @throws IaphubApiResponseException
      * @throws RedirectionExceptionInterface
      * @throws DecodingExceptionInterface
@@ -188,6 +193,7 @@ class IaphubHttpClientService
     }
 
     /**
+     * @param mixed[]|null $queryParameters
      * @throws IaphubApiResponseException
      * @throws RedirectionExceptionInterface
      * @throws DecodingExceptionInterface
@@ -214,6 +220,7 @@ class IaphubHttpClientService
     }
 
     /**
+     * @param mixed[] $payloadData
      * @throws TransportExceptionInterface
      * @throws IaphubBundleBadQueryStringException|IaphubBundleBadQueryStringValueException
      */
@@ -226,6 +233,7 @@ class IaphubHttpClientService
     }
 
     /**
+     * @param mixed[] $payloadData
      * @throws TransportExceptionInterface
      * @throws IaphubBundleBadQueryStringException
      * @throws ServerExceptionInterface
@@ -285,6 +293,7 @@ class IaphubHttpClientService
     }
 
     /**
+     * @param mixed[]|null $queryParameters
      * @throws IaphubApiResponseException
      * @throws RedirectionExceptionInterface
      * @throws DecodingExceptionInterface
@@ -310,6 +319,7 @@ class IaphubHttpClientService
     }
 
     /**
+     * @param mixed[]|null $queryParameters
      * @throws IaphubApiResponseException
      * @throws RedirectionExceptionInterface
      * @throws DecodingExceptionInterface
@@ -334,6 +344,7 @@ class IaphubHttpClientService
     }
 
     /**
+     * @param mixed[]|null $queryParameters
      * @throws IaphubApiResponseException
      * @throws RedirectionExceptionInterface
      * @throws DecodingExceptionInterface
@@ -360,6 +371,7 @@ class IaphubHttpClientService
     }
 
     /**
+     * @param mixed[]|null $queryParameters
      * @throws IaphubApiResponseException
      * @throws RedirectionExceptionInterface
      * @throws DecodingExceptionInterface
@@ -385,6 +397,7 @@ class IaphubHttpClientService
     }
 
     /**
+     * @param mixed[] $queryParameters
      * @throws IaphubBundleBadQueryStringException
      * @throws IaphubBundleBadQueryStringValueException
      */
@@ -394,6 +407,7 @@ class IaphubHttpClientService
     }
 
     /**
+     * @param mixed[] $bodyParameters
      * @throws IaphubBundleBadQueryStringValueException
      * @throws IaphubBundleBadQueryStringException
      */

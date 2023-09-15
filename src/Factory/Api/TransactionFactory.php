@@ -9,6 +9,7 @@ use Johnkhansrc\IaphubBundle\Model\Api\Transaction;
 class TransactionFactory
 {
     /**
+     * @param mixed[] $data
      * @throws Exception
      */
     public static function build(array $data): Transaction

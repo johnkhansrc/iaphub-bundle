@@ -7,6 +7,7 @@ use Johnkhansrc\IaphubBundle\Model\Api\GetPurchases;
 class GetPurchasesFactory
 {
     /**
+     * @param mixed[] $data
      * @throws \Exception
      */
     public static function build(array $data): GetPurchases

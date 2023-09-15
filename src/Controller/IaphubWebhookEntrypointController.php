@@ -52,7 +52,7 @@ class IaphubWebhookEntrypointController
     public function index(Request $request): JsonResponse
     {
         if (!$this->requestValidator->isValidHeader($request)) {
-            return $this->json([], Response::HTTP_UNAUTHORIZED);
+            return $this->json(Response::HTTP_UNAUTHORIZED);
         }
 
         $payload = json_decode($request->getContent(), true, 512, JSON_THROW_ON_ERROR);
@@ -117,8 +117,8 @@ class IaphubWebhookEntrypointController
         return $this->json();
     }
 
-    public function json(): JsonResponse
+    public function json(int $status = 200): JsonResponse
     {
-        return new JsonResponse(null, 200);
+        return new JsonResponse(null, $status);
     }
 }

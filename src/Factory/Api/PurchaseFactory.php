@@ -9,6 +9,8 @@ use Johnkhansrc\IaphubBundle\Model\Api\Purchase;
 class PurchaseFactory
 {
     /**
+     * @param mixed[] $purchasesData
+     * @return Purchase[]
      * @throws Exception
      */
     public static function buildPurchases(array $purchasesData): array
@@ -22,6 +24,7 @@ class PurchaseFactory
     }
 
     /**
+     * @param mixed[] $purchaseData
      * @throws Exception
      */
     public static function buildPurchase(array $purchaseData): Purchase

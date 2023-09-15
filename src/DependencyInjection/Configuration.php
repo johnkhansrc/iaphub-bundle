@@ -12,6 +12,7 @@ class Configuration implements ConfigurationInterface
     {
         $treeBuilder = new TreeBuilder('johnkhansrc_iaphub');
         $rootNode = $treeBuilder->getRootNode();
+        /* @phpstan-ignore-next-line */
         $rootNode
             ->children()
                 ->scalarNode('apikey')

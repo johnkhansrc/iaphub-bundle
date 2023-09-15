@@ -173,9 +173,9 @@ class ActiveProducts
     }
 
     /**
-     * @return string
+     * @return string|null
      */
-    public function getPlatform(): string
+    public function getPlatform(): ?string
     {
         return $this->platform;
     }
@@ -191,9 +191,9 @@ class ActiveProducts
     }
 
     /**
-     * @return string
+     * @return string|null
      */
-    public function getPurchase(): string
+    public function getPurchase(): ?string
     {
         return $this->purchase;
     }
@@ -227,9 +227,9 @@ class ActiveProducts
     }
 
     /**
-     * @return bool
+     * @return bool|null
      */
-    public function isFamilyShare(): bool
+    public function isFamilyShare(): ?bool
     {
         return $this->isFamilyShare;
     }

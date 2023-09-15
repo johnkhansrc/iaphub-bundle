@@ -29,6 +29,7 @@ class Purchase
     private string $country;
     /**
      * Tags of the user on purchase.
+     * @var string[]
      */
     private array $tags;
     /**
@@ -50,6 +51,7 @@ class Purchase
     /**
      * Only if the mode allowing an user to have multiple user ids is enabled
      * User ids of the user owning the purchase (A purchase can be owned by multiple user ids if restored).
+     * @var string[]|null
      */
     private ?array $userIds;
     /**
@@ -280,6 +282,10 @@ class Purchase
      */
     private ?string $originalPurchase;
 
+    /**
+     * @param string[] $tags
+     * @param string[]|null $userIds
+     */
     public function __construct(string $id,
                                 DateTime $purchaseDate,
                                 int $quantity,
@@ -472,7 +478,7 @@ class Purchase
     }
 
     /**
-     * @return array
+     * @return string[]
      */
     public function getTags(): array
     {
@@ -480,7 +486,7 @@ class Purchase
     }
 
     /**
-     * @param array $tags
+     * @param string[] $tags
      * @return Purchase
      */
     public function setTags(array $tags): Purchase
@@ -562,7 +568,7 @@ class Purchase
     }
 
     /**
-     * @return array|null
+     * @return string[]|null
      */
     public function getUserIds(): ?array
     {
@@ -570,7 +576,7 @@ class Purchase
     }
 
     /**
-     * @param array|null $userIds
+     * @param string[]|null $userIds
      * @return Purchase
      */
     public function setUserIds(?array $userIds): Purchase

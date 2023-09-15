@@ -9,6 +9,7 @@ use Johnkhansrc\IaphubBundle\Model\Api\Receipt;
 class ReceiptFactory
 {
     /**
+     * @param mixed[] $data
      * @throws Exception
      */
     public static function build(array $data): Receipt
