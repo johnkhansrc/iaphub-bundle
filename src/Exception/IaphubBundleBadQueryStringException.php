@@ -6,8 +6,15 @@ use Exception;
 
 class IaphubBundleBadQueryStringException extends Exception
 {
-    public function __construct($uri, $expected, $rejected)
+    /**
+     * @param array<int, int|string> $expected
+     */
+    public function __construct(?string $uri, array $expected, ?string $rejected)
     {
+        if (!$uri || !$rejected) {
+            $uri = 'unknown uri';
+            $rejected = 'unknown rejected parameter';
+        }
         $acceptedParameters = implode(', ', $expected);
         $message = "Cant call $uri with query parameter '$rejected', accepted parameters: $acceptedParameters";
 

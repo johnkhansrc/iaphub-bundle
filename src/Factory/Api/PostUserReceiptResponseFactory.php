@@ -7,6 +7,7 @@ use Johnkhansrc\IaphubBundle\Model\Api\PostUserReceiptResponse;
 class PostUserReceiptResponseFactory
 {
     /**
+     * @param mixed[] $data
      * @throws \Exception
      */
     public static function build(array $data): PostUserReceiptResponse

@@ -11,6 +11,7 @@ use Johnkhansrc\IaphubBundle\Model\Api\ProductsForSale;
 class GetUserApiResponseFactory
 {
     /**
+     * @param mixed[] $payload
      * @throws Exception
      */
     public static function build(array $payload): GetUserApiResponse

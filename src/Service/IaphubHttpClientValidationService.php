@@ -53,12 +53,13 @@ class IaphubHttpClientValidationService
         ],
     ];
 
-    public static function withoutNamespace(string $method)
+    public static function withoutNamespace(string $method): ?string
     {
         return preg_replace('/[a-zA-Z\\\]+[\:]{2}/', '', $method);
     }
 
     /**
+     * @param mixed[] $queryParameters
      * @throws IaphubBundleBadQueryStringException
      * @throws IaphubBundleBadQueryStringValueException
      */
@@ -76,16 +77,21 @@ class IaphubHttpClientValidationService
     }
 
     /**
+     * @param array<int, string>|string $acceptedParameterValues
      * @throws IaphubBundleBadQueryStringValueException
      */
-    private function validateParameterValues($acceptedParameterValues, $parameterValue, string $apiUri): void
+    private function validateParameterValues(array|string $acceptedParameterValues, mixed $parameterValue, string $apiUri): void
     {
+        if (!is_array($acceptedParameterValues)) {
+            return;
+        }
         if (!in_array($parameterValue, $acceptedParameterValues, true)) {
             throw new IaphubBundleBadQueryStringValueException($apiUri, $acceptedParameterValues, $parameterValue);
         }
     }
 
     /**
+     * @param mixed[] $bodyParameters
      * @throws IaphubBundleBadQueryStringException
      * @throws IaphubBundleBadQueryStringValueException
      */
@@ -103,9 +109,10 @@ class IaphubHttpClientValidationService
     }
 
     /**
+     * @param mixed[] $acceptedParameterValues
      * @throws IaphubBundleBadQueryStringValueException
      */
-    private function validateBodyParameterValues($acceptedParameterValues, $parameterValue, string $apiUri): void
+    private function validateBodyParameterValues(array $acceptedParameterValues, mixed $parameterValue, string $apiUri): void
     {
         if (!in_array($parameterValue, $acceptedParameterValues, true)) {
             throw new IaphubBundleBadQueryStringValueException($apiUri, $acceptedParameterValues, $parameterValue);
